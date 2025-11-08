@@ -128,243 +128,247 @@ def nova_geracao(populacao):
     return nova_pop
 
 
-# --------------------------------------------------------
-# EXECUÇÃO PRINCIPAL (30 REPETIÇÕES)
-# --------------------------------------------------------
-melhores_resultados = []
+def main():
+    # EXECUÇÃO PRINCIPAL (30 REPETIÇÕES)
+    # --------------------------------------------------------
+    melhores_resultados = []
 
-for execucao in range(1, NUMERO_EXECUCOES + 1):
-    populacao = criar_populacao_inicial()
+    for execucao in range(1, NUMERO_EXECUCOES + 1):
+        populacao = criar_populacao_inicial()
 
-    for _ in range(GERACOES):
-        populacao = nova_geracao(populacao)
+        for _ in range(GERACOES):
+            populacao = nova_geracao(populacao)
 
-    populacao.sort(key=lambda ind: ind["fitness"])
-    melhor = populacao[0]
-    melhores_resultados.append(melhor["fitness"])
-    rota_nomes = " -> ".join(CIDADES[i] for i in melhor["rota"])
+        populacao.sort(key=lambda ind: ind["fitness"])
+        melhor = populacao[0]
+        melhores_resultados.append(melhor["fitness"])
+        rota_nomes = " -> ".join(CIDADES[i] for i in melhor["rota"])
 
-    print(f"Execução {execucao:02d}:")
-    print(f"  Melhor rota: {melhor['rota']}")
-    print(f"  Cidades: {rota_nomes}")
-    print(f"  Menor distância: {melhor['fitness']} milhas")
-    print("-" * 60)
+        print(f"Execução {execucao:02d}:")
+        print(f"  Melhor rota: {melhor['rota']}")
+        print(f"  Cidades: {rota_nomes}")
+        print(f"  Menor distância: {melhor['fitness']} milhas")
+        print("-" * 60)
 
-media = statistics.mean(melhores_resultados)
-desvio = statistics.stdev(melhores_resultados)
+    media = statistics.mean(melhores_resultados)
+    desvio = statistics.stdev(melhores_resultados)
 
-print("\n=== RESULTADOS FINAIS ===")
-print(f"Média das melhores distâncias: {media:.2f} milhas")
-print(f"Desvio padrão: {desvio:.2f} milhas")
+    print("\n=== RESULTADOS FINAIS ===")
+    print(f"Média das melhores distâncias: {media:.2f} milhas")
+    print(f"Desvio padrão: {desvio:.2f} milhas")
 
-# =============================================================
-# GRÁFICO DE CONVERGÊNCIA (MELHOR FITNESS POR EXECUÇÃO)
-# =============================================================
-# sns.set_theme(style="whitegrid", context="notebook", palette="viridis")
+    # =============================================================
+    # GRÁFICO DE CONVERGÊNCIA (MELHOR FITNESS POR EXECUÇÃO)
+    # =============================================================
+    # sns.set_theme(style="whitegrid", context="notebook", palette="viridis")
 
-# plt.rcParams.update({
-#     "figure.figsize": (12, 7),
-#     "axes.titlesize": 18,
-#     "axes.labelsize": 14,
-#     "xtick.labelsize": 12,
-#     "ytick.labelsize": 12,
-#     "legend.fontsize": 12,
-#     "lines.linewidth": 2.5,
-#     "axes.edgecolor": "#444444",
-#     "axes.linewidth": 1.2
-# })
-
-
-# execucoes = np.arange(1, len(melhores_resultados) + 1)
-# fit =  np.array(melhores_resultados)
-
-# fig, ax = plt.subplots()
-
-# ax.plot(
-#     execucoes,
-#     fit,
-#     color=sns.color_palette("crest")[4],
-#     linewidth=2.5,
-#     label="Melhor fitness por execução",
-#     path_effects=[pe.SimpleLineShadow(alpha=0.4), pe.Normal()]
-# )
-
-# # Marcadores com cor distinta
-# ax.scatter(
-#     execucoes,
-#     fit,
-#     color=sns.color_palette("flare", 10)[6],
-#     s=70,
-#     zorder=3,
-#     label="Execuções individuais"
-# )
-
-# ax.set_title("Convergência do Algoritmo Genético\nMelhor Fitness por Execução", pad=20)
-# ax.set_xlabel("Execução")
-# ax.set_ylabel("Melhor distância (milhas)")
-
-# ax.legend(frameon=True, loc="best", fancybox=True)
-# ax.grid(True, linestyle="--", alpha=0.5)
-
-# for spine in ["top", "right"]:
-#     ax.spines[spine].set_visible(False)
+    # plt.rcParams.update({
+    #     "figure.figsize": (12, 7),
+    #     "axes.titlesize": 18,
+    #     "axes.labelsize": 14,
+    #     "xtick.labelsize": 12,
+    #     "ytick.labelsize": 12,
+    #     "legend.fontsize": 12,
+    #     "lines.linewidth": 2.5,
+    #     "axes.edgecolor": "#444444",
+    #     "axes.linewidth": 1.2
+    # })
 
 
+    # execucoes = np.arange(1, len(melhores_resultados) + 1)
+    # fit =  np.array(melhores_resultados)
 
-# ax.text(
-#     0.02, -0.12,
-#     f"População: {POPULACAO_TAMANHO} | Gerações: {GERACOES} | Execuções: {NUMERO_EXECUCOES}",
-#     transform=ax.transAxes,
-#     fontsize=10,
-#     color="#555555"
-# )
+    # fig, ax = plt.subplots()
 
-# fig.tight_layout()
-# plt.show()
+    # ax.plot(
+    #     execucoes,
+    #     fit,
+    #     color=sns.color_palette("crest")[4],
+    #     linewidth=2.5,
+    #     label="Melhor fitness por execução",
+    #     path_effects=[pe.SimpleLineShadow(alpha=0.4), pe.Normal()]
+    # )
+
+    # # Marcadores com cor distinta
+    # ax.scatter(
+    #     execucoes,
+    #     fit,
+    #     color=sns.color_palette("flare", 10)[6],
+    #     s=70,
+    #     zorder=3,
+    #     label="Execuções individuais"
+    # )
+
+    # ax.set_title("Convergência do Algoritmo Genético\nMelhor Fitness por Execução", pad=20)
+    # ax.set_xlabel("Execução")
+    # ax.set_ylabel("Melhor distância (milhas)")
+
+    # ax.legend(frameon=True, loc="best", fancybox=True)
+    # ax.grid(True, linestyle="--", alpha=0.5)
+
+    # for spine in ["top", "right"]:
+    #     ax.spines[spine].set_visible(False)
 
 
 
-# =============================================================
-# CONFIGURAÇÃO DE ESTILO
-# =============================================================
-sns.set_theme(style="whitegrid", context="notebook", palette="crest")
+    # ax.text(
+    #     0.02, -0.12,
+    #     f"População: {POPULACAO_TAMANHO} | Gerações: {GERACOES} | Execuções: {NUMERO_EXECUCOES}",
+    #     transform=ax.transAxes,
+    #     fontsize=10,
+    #     color="#555555"
+    # )
 
-plt.rcParams.update({
-    "figure.figsize": (10, 9),
-    "axes.titlesize": 18,
-    "axes.titleweight": 'bold',
-    "axes.labelsize": 14,
-    "xtick.labelsize": 12,
-    "ytick.labelsize": 12,
-    "axes.edgecolor": "#444",
-    "axes.linewidth": 1.2
-})
-
-# =============================================================
-# DADOS
-# =============================================================
-execucoes = np.arange(1, len(melhores_resultados) + 1)
-fit= np.array(melhores_resultados)
-
-# =============================================================
-# SUBPLOTS: 2 GRÁFICOS (CONVERGÊNCIA + BOXPLOT)
-# =============================================================
-# fig, (ax1, ax2) = plt.subplots(2, 1, sharex=False, height_ratios=[3, 1.2], figsize=(10, 10))
-# fig.subplots_adjust(hspace=0.45)
-
-fig = plt.figure(constrained_layout=False, figsize=(10, 9))
-gs = gridspec.GridSpec(
-    2, 1,             # 2 linhas, 1 coluna
-    height_ratios=[3, 1.2],  # proporção entre os gráficos
-    hspace=0.5        # espaço vertical entre eles
-)
-# Cria os eixos com base no grid
-ax1 = fig.add_subplot(gs[0, 0])  # gráfico de convergência
-ax2 = fig.add_subplot(gs[1, 0])  # gráfico boxplot
+    # fig.tight_layout()
+    # plt.show()
 
 
-# -------------------------------------------------------------
-# 1️⃣ GRÁFICO DE CONVERGÊNCIA
-# -------------------------------------------------------------
-ax1.plot(
-    execucoes,
-    fit,
-    color=sns.color_palette("crest")[4],
-    linewidth=2.5,
-    label="Melhor fitness por execução",
-    path_effects=[pe.SimpleLineShadow(alpha=0.4), pe.Normal()]
-)
 
-ax1.scatter(
-    execucoes,
-    fit,
-    color=sns.color_palette("flare", 10)[5],
-    s=70,
-    zorder=3,
-    label="Execuções individuais"
-)
+    # =============================================================
+    # CONFIGURAÇÃO DE ESTILO
+    # =============================================================
+    sns.set_theme(style="whitegrid", context="notebook", palette="crest")
 
-# Tendência linear
-z = np.polyfit(execucoes, fit, 1)
-trend = np.poly1d(z)
-ax1.plot(
-    execucoes,
-    trend(execucoes),
-    color="#E76F51",
-    linestyle="--",
-    linewidth=1.8,
-    label="Tendência linear"
-)
+    plt.rcParams.update({
+        "figure.figsize": (10, 9),
+        "axes.titlesize": 18,
+        "axes.titleweight": 'bold',
+        "axes.labelsize": 14,
+        "xtick.labelsize": 12,
+        "ytick.labelsize": 12,
+        "axes.edgecolor": "#444",
+        "axes.linewidth": 1.2
+    })
 
-ax1.set_title("Convergência do Algoritmo Genético", fontweight='bold', pad=15)
-ax1.set_ylabel("Melhor distância (milhas)")
-ax1.set_xlabel("Execução")
-ax1.legend(frameon=True, loc="best", fancybox=True)
-ax1.grid(True, linestyle="--", alpha=0.5)
+    # =============================================================
+    # DADOS
+    # =============================================================
+    execucoes = np.arange(1, len(melhores_resultados) + 1)
+    fit= np.array(melhores_resultados)
 
-for spine in ["top", "right"]:
-    ax1.spines[spine].set_visible(False)
+    # =============================================================
+    # SUBPLOTS: 2 GRÁFICOS (CONVERGÊNCIA + BOXPLOT)
+    # =============================================================
+    # fig, (ax1, ax2) = plt.subplots(2, 1, sharex=False, height_ratios=[3, 1.2], figsize=(10, 10))
+    # fig.subplots_adjust(hspace=0.45)
+
+    fig = plt.figure(constrained_layout=False, figsize=(10, 9))
+    gs = gridspec.GridSpec(
+        2, 1,             # 2 linhas, 1 coluna
+        height_ratios=[3, 1.2],  # proporção entre os gráficos
+        hspace=0.5        # espaço vertical entre eles
+    )
+    # Cria os eixos com base no grid
+    ax1 = fig.add_subplot(gs[0, 0])  # gráfico de convergência
+    ax2 = fig.add_subplot(gs[1, 0])  # gráfico boxplot
 
 
-ax1.text(
-    0.02, -0.12,
-    f"População: {POPULACAO_TAMANHO} | Gerações: {GERACOES} | Execuções: {NUMERO_EXECUCOES}",
-    transform=ax1.transAxes,
-    fontsize=10,
-    color="#555555"
-)
-# -------------------------------------------------------------
-# 2️⃣ BOXPLOT DA DISTRIBUIÇÃO FINAL
-# -------------------------------------------------------------
-sns.boxplot(
-    y=fit,
-    width=0.3,
-    color=sns.color_palette("crest")[4],
-    boxprops={"alpha": 0.8, "linewidth": 1.2},
-    medianprops={"color": "#E76F51", "linewidth": 2},
-    whiskerprops={"linewidth": 1.2},
-    capprops={"linewidth": 1.2},
-    flierprops={"marker": "o", "color": "#243FD8", "alpha": 0.8, "markersize": 7},
-    ax=ax2
-)
+    # -------------------------------------------------------------
+    # 1️⃣ GRÁFICO DE CONVERGÊNCIA
+    # -------------------------------------------------------------
+    ax1.plot(
+        execucoes,
+        fit,
+        color=sns.color_palette("crest")[4],
+        linewidth=2.5,
+        label="Melhor fitness por execução",
+        path_effects=[pe.SimpleLineShadow(alpha=0.4), pe.Normal()]
+    )
+
+    ax1.scatter(
+        execucoes,
+        fit,
+        color=sns.color_palette("flare", 10)[5],
+        s=70,
+        zorder=3,
+        label="Execuções individuais"
+    )
+
+    # Tendência linear
+    z = np.polyfit(execucoes, fit, 1)
+    trend = np.poly1d(z)
+    ax1.plot(
+        execucoes,
+        trend(execucoes),
+        color="#E76F51",
+        linestyle="--",
+        linewidth=1.8,
+        label="Tendência linear"
+    )
+
+    ax1.set_title("Convergência do Algoritmo Genético", fontweight='bold', pad=15)
+    ax1.set_ylabel("Melhor distância (milhas)")
+    ax1.set_xlabel("Execução")
+    ax1.legend(frameon=True, loc="best", fancybox=True)
+    ax1.grid(True, linestyle="--", alpha=0.5)
+
+    for spine in ["top", "right"]:
+        ax1.spines[spine].set_visible(False)
 
 
-sns.stripplot(
-    y=fit,
-    color=sns.color_palette("flare", 10)[5],
-    alpha=0.7,
-    jitter=0.18,     # espalhamento horizontal
-    size=6,
-    zorder=3,
-    ax=ax2
-)
+    ax1.text(
+        0.02, -0.12,
+        f"População: {POPULACAO_TAMANHO} | Gerações: {GERACOES} | Execuções: {NUMERO_EXECUCOES}",
+        transform=ax1.transAxes,
+        fontsize=10,
+        color="#555555"
+    )
+    # -------------------------------------------------------------
+    # 2️⃣ BOXPLOT DA DISTRIBUIÇÃO FINAL
+    # -------------------------------------------------------------
+    sns.boxplot(
+        y=fit,
+        width=0.3,
+        color=sns.color_palette("crest")[4],
+        boxprops={"alpha": 0.8, "linewidth": 1.2},
+        medianprops={"color": "#E76F51", "linewidth": 2},
+        whiskerprops={"linewidth": 1.2},
+        capprops={"linewidth": 1.2},
+        flierprops={"marker": "o", "color": "#243FD8", "alpha": 0.8, "markersize": 7},
+        ax=ax2
+    )
 
 
-ax2.set_title("Distribuição dos Melhores Fitness", pad=10)
-ax2.set_ylabel("Distância (milhas)")
-ax2.set_xticks([])
+    sns.stripplot(
+        y=fit,
+        color=sns.color_palette("flare", 10)[5],
+        alpha=0.7,
+        jitter=0.18,     # espalhamento horizontal
+        size=6,
+        zorder=3,
+        ax=ax2
+    )
 
-# Estatísticas
-media = np.mean(fit)
-mediana = np.median(fit)
-desvio = np.std(fit)
 
-ax2.text(
-    0.05, 0.95,
-    f"Média: {media:.2f}\nMediana: {mediana:.2f}\nDesvio: {desvio:.2f}",
-    transform=ax2.transAxes,
-    fontsize=10,
-    color="#333333",
-    verticalalignment="top",
-    bbox=dict(facecolor="white", alpha=0.8, edgecolor="#AAAAAA")
-)
+    ax2.set_title("Distribuição dos Melhores Fitness", pad=10)
+    ax2.set_ylabel("Distância (milhas)")
+    ax2.set_xticks([])
 
-for spine in ["top", "right"]:
-    ax2.spines[spine].set_visible(False)
+    # Estatísticas
+    media = np.mean(fit)
+    mediana = np.median(fit)
+    desvio = np.std(fit)
 
-# =============================================================
-# LAYOUT FINAL
-# =============================================================
-fig.suptitle("Análise de Desempenho do Algoritmo Genético (TSP)", fontsize=20, y=2.02)
-fig.tight_layout(rect=[0, 0, 1, 0.97])
-plt.show()
+    ax2.text(
+        0.05, 0.95,
+        f"Média: {media:.2f}\nMediana: {mediana:.2f}\nDesvio: {desvio:.2f}",
+        transform=ax2.transAxes,
+        fontsize=10,
+        color="#333333",
+        verticalalignment="top",
+        bbox=dict(facecolor="white", alpha=0.8, edgecolor="#AAAAAA")
+    )
+
+    for spine in ["top", "right"]:
+        ax2.spines[spine].set_visible(False)
+
+    # =============================================================
+    # LAYOUT FINAL
+    # =============================================================
+    fig.suptitle("Análise de Desempenho do Algoritmo Genético (TSP)", fontsize=20, y=2.02)
+    fig.tight_layout()
+    plt.show()
+
+
+if __name__ == "__main__":
+    main()
